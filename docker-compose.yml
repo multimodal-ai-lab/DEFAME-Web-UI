@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: ./client
+    ports:
+      - "5173:80"
+    env_file: ./client/.env
+    depends_on:
+      - backend
+    networks:
+      - mern-app
+
+  backend:
+    build: ./server
+    ports:
+      - "3000:3000"
+    env_file: ./server/.env
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/Factchecker"
+    networks:
+      - mern-app
+
+  mongo:
+    image: mongo:7.0.12
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - mern-app
+  mongo-express:
+    image: mongo-express:latest
+    restart: always
+    ports:
+    - 8085:8081
+    networks:
+      - mern-app
+
+volumes:
+  mongo_data:
+networks:
+  mern-app:
+    driver: bridge
