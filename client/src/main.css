@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+h1 {
+    font-family: 'ADLaM Display', sans-serif;
+    font-weight: 400;
+}

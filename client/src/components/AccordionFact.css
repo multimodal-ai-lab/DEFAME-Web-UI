@@ -1,0 +1,9 @@
+.full-report {
+    cursor: pointer;
+    text-decoration: none; 
+    transition: text-decoration 0.3s; 
+  }
+  
+.full-report:hover {
+    text-decoration: underline; 
+  }

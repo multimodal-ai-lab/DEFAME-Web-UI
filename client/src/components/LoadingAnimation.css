@@ -1,0 +1,12 @@
+.loadbox {
+  width: 50%;
+  height: 100%;
+  cursor: wait;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.firsttext {
+  font-family: "ADLaM Display", sans-serif;
+}

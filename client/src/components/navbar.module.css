@@ -1,0 +1,141 @@
+/* Sidebar Container */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  padding-top: 50px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  transition: transform 0.3s ease, width 0.3s ease; /* Smooth animation */
+  position: fixed; /* Sidebar fixed to the screen */
+  left: 0;
+  top: 0;
+  z-index: 999;
+  background-color: #2C2F33; /* Charcoal */
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.closed {
+  transform: translateX(-105%);
+}
+
+/* FaBars Toggle Button */
+.toggleButton {
+  font-size: 1.5rem;
+  color: #7289DA; /* Softer Discord-style blue */
+  cursor: pointer;
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  z-index: 1000; /* Ensure toggle is above everything */
+}
+
+.toggleButton:hover {
+  color: #5B6EAE; /* Slightly darker blue */
+}
+
+/* Header */
+.header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #FFFFFF; /* White text for contrast */
+  text-align: center;
+}
+
+/* Search Bar */
+.searchContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px;
+  padding-right: 35px; /* Add padding for the search icon */
+  border: 1px solid #4F4F4F; /* Darker border for better integration */
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #FFFFFF; /* White text */
+  background-color: #40444B; /* Dark gray for contrast */
+}
+
+.searchInput::placeholder {
+  color: #B0B0B0; /* Soft gray placeholder */
+}
+
+.searchIcon {
+  position: absolute;
+  right: 10px;
+  color: #B0B0B0; /* Subtle gray */
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Subjects Container */
+.subjectsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Individual Subject Item */
+.subjectItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #40444B; /* Darker background */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  color: #FFFFFF;
+}
+
+.subjectItem:hover {
+  background-color: #5865F2; /* Soft Discord blue */
+}
+
+/* Subject Title */
+.subjectTitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #FFFFFF; /* White text */
+  text-decoration: none;
+}
+
+/* Action Icons */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.editIcon {
+  color: #B0B0B0; /* Light gray */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.editIcon:hover {
+  transform: scale(1.2);
+  color: #FFFFFF;
+}
+
+.deleteIcon {
+  color: #E04646;  
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.deleteIcon:hover {
+  transform: scale(1.2);
+  color: #FF5E5E; /* Lighter red on hover */
+}

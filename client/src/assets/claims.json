@@ -1,0 +1,41 @@
+{
+    "claims": [
+      {
+        "text": "Climate change is a hoax.",
+        "verdict": "True",
+        "justification": "The overwhelming consensus among climate scientists is that climate change is real and primarily caused by human activities.",
+        "link_pdf": "https://example.com/climate_change_evidence.pdf"
+      },
+      {
+        "text": "Vaccines cause autism.",
+        "verdict": "Refuted",
+        "justification": "Extensive studies have shown no link between vaccines and autism. This claim has been widely debunked by scientific research.",
+        "link_pdf": "https://example.com/vaccine_studies.pdf"
+      },
+      {
+        "text": "Drinking water helps maintain healthy skin.",
+        "verdict": "Not entirely true",
+        "justification": "While hydration is essential for overall health, its direct impact on skin appearance varies and may not be as significant as claimed.",
+        "link_pdf": "https://example.com/hydration_and_skin_health.pdf"
+      },
+      {
+        "text": "Artificial Intelligence will replace all human jobs by 2050.",
+        "verdict": "True",
+        "justification": "AI is expected to automate some tasks, but it is unlikely to replace all jobs due to the complexity of human creativity and emotional intelligence.",
+        "link_pdf": "https://example.com/ai_and_future_jobs.pdf"
+      },
+      {
+        "text": "The Great Wall of China is visible from space.",
+        "verdict": "True",
+        "justification": "While some astronauts have claimed to see it, visibility is limited due to the wall's narrow width compared to its surroundings.",
+        "link_pdf": "https://example.com/great_wall_visibility.pdf"
+      },
+      {
+        "text": "Consuming sugar leads to hyperactivity in children.",
+        "verdict": "Not Known",
+        "justification": "Scientific studies have not found a direct link between sugar consumption and hyperactivity in children.",
+        "link_pdf": "https://example.com/sugar_and_behavior.pdf"
+      }
+    ]
+  }
+  
