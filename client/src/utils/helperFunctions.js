@@ -109,8 +109,8 @@
     return processContent();
   };
   export const setTitle = (text) => {
-    if (text.length > 30) {
-      return text.slice(0, 30) + "...";
+    if (text.length > 52) {
+      return text.slice(0, 52) + "...";
     } else return text;
   };
   

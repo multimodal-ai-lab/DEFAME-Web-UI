@@ -194,7 +194,7 @@ const FactCheckingPage = () => {
         {firstResponse && (
           <div className="checkbox">
             <h1 style={{ textAlign: "center" }}>
-              {secondResponse
+              {finished
                 ? "Fact-Check Results"
                 : "Fact-Check in Progress..."}
             </h1>

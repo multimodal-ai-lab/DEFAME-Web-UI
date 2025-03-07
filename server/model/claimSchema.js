@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
 const ClaimEntrySchema = new mongoose.Schema({
-  claim_id: { type: String,unique:true, required: true  },
+  claim_id: { type: String,required: true  },
   data: { type: [[String]], required: true }, // Array of arrays of strings
   verdict: { type: String, required: true },
   justification: { type: [[String]], required: true } // Array of arrays of strings
 });
 
 const ClaimSchema = new mongoose.Schema({ 
-  jobId: { type: String, required: true },
+  jobId: { type: String, unique:true , required: true },
   content: { type: [[String]], required: true }, // Array of arrays of strings
   claims: {
     type: [ClaimEntrySchema], // Now it's an array of claim objects
