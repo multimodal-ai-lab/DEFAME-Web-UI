@@ -4,7 +4,6 @@ import { useLocation, useParams } from "react-router-dom";
 import LoadingAnimation from "../components/LoadingAnimation";
 import AccordionFact from "../components/AccordionFact";
 import "./FactCheckingPage.css";
-import { setTitle } from "../utils/helperFunctions";
 import {
   handleSave,
   getResults,
@@ -35,6 +34,9 @@ const FactCheckingPage = () => {
 
   const [claims, setClaims] = useState([]);
   var state = "disconnected";
+  useEffect(() => {
+    console.log(buttons); // Logs updated state
+  }, [buttons]);
   useEffect(() => {
     const newContent = location.state?.data?.content || [];
     setContent(newContent);
@@ -84,7 +86,6 @@ const FactCheckingPage = () => {
               setClaims(() => [...claimsArray]);
               setFirstResponse(true);
               setSecondResponse(true);
-            
             }
             if (
               (status === "RUNNING" && data?.claims) ||
@@ -137,24 +138,29 @@ const FactCheckingPage = () => {
         socket.close();
       };
     }
-  }, [jobId]);
+  }, [jobId,id]);
   useEffect(() => {
     const saveResults = async () => {
       if (finished) {
         await handleSave(jobId, content, claims);
-        const storedButtons = JSON.parse(localStorage.getItem("buttons")) || [];
-        setButtons(storedButtons);
-        if (claims.length > 0 && claims[0]?.data?.[1]) {
-          const newButton = { id: jobId, title: setTitle(claims[0].data[1]) };
+        const storedButtons =
+          JSON.parse(sessionStorage.getItem("buttons")) || [];
+        const exists = storedButtons.some((button) => button.id === jobId);
+        if (!exists) {
+          const newButton = { id: jobId, title: claims[0].data[0][1] };
           const updatedButtons = [...storedButtons, newButton];
-          localStorage.setItem("buttons", JSON.stringify(updatedButtons));
-          console.log(buttons);
+          sessionStorage.setItem("buttons", JSON.stringify(updatedButtons));
+          window.dispatchEvent(new Event("storage"));
+          setButtons(updatedButtons);
+        } else {
+          console.log("Button with this ID already exists!");
         }
       }
     };
 
     saveResults();
   }, [finished]);
+
   const updateClaims = (claim) => {
     setClaims((prevClaims) => {
       const newClaims = [...prevClaims];
@@ -194,9 +200,7 @@ const FactCheckingPage = () => {
         {firstResponse && (
           <div className="checkbox">
             <h1 style={{ textAlign: "center" }}>
-              {finished
-                ? "Fact-Check Results"
-                : "Fact-Check in Progress..."}
+              {finished ? "Fact-Check Results" : "Fact-Check in Progress..."}
             </h1>
             <div
               className="content"
@@ -212,7 +216,7 @@ const FactCheckingPage = () => {
                   key={item.claim_id}
                   item={item}
                   firstResponse={firstResponse}
-                  secondResponse={item.verdict != null} 
+                  secondResponse={item.verdict != null}
                   reportAvailable={reportAvailable}
                 />
               ))}

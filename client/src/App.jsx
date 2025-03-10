@@ -28,15 +28,24 @@ const useBackendStatus = () => {
 
 function App() {
   const [buttons, setButtons] = useState([]);
-  // Load buttons from localStorage when the component mounts
-  //  useEffect(() => {
-  //   const storedButtons = JSON.parse(localStorage.getItem("buttons")) || [];
-  //    setButtons(storedButtons);
-  //  }, []);
+  // Load buttons from sessionStorage when the component mounts
   useEffect(() => {
-    const newButtons = [{id:"-xUwJMubZTYukRa6o0Mscw",title:"Dogs are happy"}]
-    setButtons(newButtons)
+    const loadButtons = () => {
+      const storedButtons = JSON.parse(sessionStorage.getItem("buttons")) || [];
+      setButtons(storedButtons);
+    };
+  
+    // Run once on mount
+    loadButtons();
+  
+    // Listen for storage changes
+    window.addEventListener("storage", loadButtons);
+    
+    return () => {
+      window.removeEventListener("storage", loadButtons);
+    };
   }, []);
+  
 
   const isBackendOnline = useBackendStatus();
 

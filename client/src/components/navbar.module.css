@@ -91,7 +91,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 15px;
+  padding: 12px 10px;
   background-color: #40444B; /* Darker background */
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -138,4 +138,17 @@
 .deleteIcon:hover {
   transform: scale(1.2);
   color: #FF5E5E; /* Lighter red on hover */
+}
+.editInput {
+  width: 100%; /* Make input fill the button */
+  height: 100%; /* Ensure it covers the button */
+  border: none; /* Remove border */
+  padding: 10px; /* Adjust padding */
+  font-size: 16px; /* Ensure text is readable */
+  background: inherit; /* Match the button's background */
+  outline: none; /* Remove default focus outline */
+  color: inherit; /* Match button text color */
+  text-align: center; /* Center text */
+  font-weight: bold; /* Make text bold */
+  box-sizing: border-box; /* Ensure padding doesn't overflow */
 }

@@ -113,4 +113,19 @@
       return text.slice(0, 52) + "...";
     } else return text;
   };
-  
+  export const setNavbarTitle = (text,hovered) => {
+    if (hovered) {
+      if (text.length > 16) {
+        return text.slice(0, 16) + "..";
+      } 
+      else {
+        return text
+      }
+    }
+    else {
+      if (text.length > 20) {
+        return text.slice(0, 20) + "..";
+      }
+      return text
+    }
+  };
