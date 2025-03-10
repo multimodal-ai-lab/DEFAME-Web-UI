@@ -23,7 +23,7 @@ const Sidebar = ({ buttons, setButtons }) => {
   );
   const navigate = useNavigate();
   const handleButtonClick = (id) => {
-    console.log("Navigating with ID:", id); 
+    console.log("Navigating with ID:", id);
     navigate(`/checking/${id}`);
   };
 
@@ -79,29 +79,31 @@ const Sidebar = ({ buttons, setButtons }) => {
 
             {/* Subjects List */}
             <div className={styles.subjectsContainer}>
-              {filteredButtons.map((button,index) => (
-                <button
-                  key={index}
-                  className={styles.subjectItem}
-                  onMouseEnter={(e) =>
-                    e.currentTarget.classList.add(styles.hover)
-                  }
-                  onMouseLeave={(e) =>
-                    e.currentTarget.classList.remove(styles.hover)
-                  }
-                >
-                  <span className={styles.subjectTitle}>{button.title}</span>
-                  <div className={styles.actions}>
-                    <FaEdit
-                      className={styles.editIcon}
-                      onClick={() => handleEdit(index)}
-                    />
-                    <FaTrash
-                      className={styles.deleteIcon}
-                      onClick={() => handleDelete(index)}
-                    />
-                  </div>
-                </button>
+              {filteredButtons.map((button, index) => (
+                <Link to={`/checking/${button.id}`} style={{ textDecoration: "none" }}>
+                  <button style={{width :"100%"}}
+                    key={index}
+                    className={styles.subjectItem}
+                    onMouseEnter={(e) =>
+                      e.currentTarget.classList.add(styles.hover)
+                    }
+                    onMouseLeave={(e) =>
+                      e.currentTarget.classList.remove(styles.hover)
+                    }
+                  >
+                    <span className={styles.subjectTitle}>{button.title}</span>
+                    <div className={styles.actions}>
+                      <FaEdit
+                        className={styles.editIcon}
+                        onClick={() => handleEdit(index)}
+                      />
+                      <FaTrash
+                        className={styles.deleteIcon}
+                        onClick={() => handleDelete(index)}
+                      />
+                    </div>
+                  </button>
+                </Link>
               ))}
             </div>
           </>
