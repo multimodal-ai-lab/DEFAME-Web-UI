@@ -115,12 +115,12 @@ const AccordionFact = (props) => {
   };
 
   // Function to convert Markdown links to clickable links
-  const renderJustificationWithLinks = (text) => {
+  const renderJustificationWithLinks = (text,color) => {
     if (!text) return "";
 
     return text.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">$1</a>'
+      `<a href="$2" target="_blank" rel="noopener noreferrer" style="color: ${color}; text-decoration: underline;">$1</a>`
     );
   };
 
@@ -252,7 +252,7 @@ const AccordionFact = (props) => {
                   __html: renderJustificationWithLinks(
                     props.item.justification
                       ? props.item.justification[0][1]
-                      : ""
+                      : "",setColor(props.item.verdict)
                   ),
                 }}
               ></p>

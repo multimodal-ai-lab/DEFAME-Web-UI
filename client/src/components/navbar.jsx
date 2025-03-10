@@ -45,7 +45,7 @@ const Sidebar = ({ buttons, setButtons }) => {
       >
         {isOpen && (
           <>
-            {/* New Claims */}
+            {/* New Check */}
             <Link to="/" style={{ textDecoration: "none" }}>
               <button
                 style={{
@@ -60,7 +60,7 @@ const Sidebar = ({ buttons, setButtons }) => {
                 }}
                 className={styles.subjectItem}
               >
-                New Claims
+                New Check
               </button>
             </Link>
             {/* Header */}
