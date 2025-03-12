@@ -3,24 +3,25 @@ import "./LandingPage.css";
 import { FaImage } from "react-icons/fa6";
 import { LuSendHorizontal } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import { postData, saveContent } from "../services/apiCalls";
-import {
-  handlePaste,
-  handleFileUpload,
-  parseContent,
-} from "../utils/helperFunctions";
-import { useId } from "react";
+import { postData } from "../services/apiCalls";
+import { handlePaste, handleFileUpload, parseContent } from "../utils/helperFunctions";
 
 const LandingPage = () => {
-  // const [isFocused, setIsFocused] = useState(false);
   const editorRef = useRef(null);
-  // const handleFocus = () => {
-  //   setIsFocused(true);
-  // };
+  const [isSendDisabled, setIsSendDisabled] = useState(true);
+  const navigate = useNavigate();
+
   useEffect(() => {
     editorRef.current.focus();
   }, []);
-  const navigate = useNavigate();
+
+  // Function to check if content is empty
+  const checkContent = () => {
+    const textContent = editorRef.current.innerText.trim();
+    const hasImages = editorRef.current.querySelector("img") !== null;
+    setIsSendDisabled(textContent === "" && !hasImages);
+  };
+
   // Function to handle sending content
   const handleSendContent = async () => {
     const parsedContent = await parseContent(editorRef);
@@ -28,7 +29,7 @@ const LandingPage = () => {
       const response = await postData(parsedContent);
       if (response) {
         navigate("/checking", {
-          state: { data: parsedContent , jobId : response },
+          state: { data: parsedContent, jobId: response },
         });
       }
     }
@@ -49,15 +50,12 @@ const LandingPage = () => {
               ref={editorRef}
               contentEditable
               suppressContentEditableWarning
+              onInput={checkContent}
               onPaste={(e) => {
                 handlePaste(e, editorRef);
+                setTimeout(checkContent, 50); 
               }}
-              // onFocus={handleFocus}
-            >
-              {/* <span style={{ color: "#A6A6A6", fontSize: "15px" }}>
-                {!isFocused ? "Insert claim here ..." : ""}
-              </span> */}
-            </div>
+            ></div>
             <div className="image-and-send">
               {/* Hidden file input for image upload */}
               <input
@@ -65,7 +63,10 @@ const LandingPage = () => {
                 id="file-input"
                 accept="image/*"
                 style={{ display: "none" }}
-                onChange={(e) => handleFileUpload(e, editorRef)}
+                onChange={(e) => {
+                  handleFileUpload(e, editorRef);
+                  setTimeout(checkContent, 50); 
+                }}
               />
               {/* Image upload icon */}
               <button
@@ -82,15 +83,26 @@ const LandingPage = () => {
                   }}
                 />
               </button>
-              <LuSendHorizontal
-                className="icons"
+              {/* Send button */}
+              <button
+                className="send-button"
                 onClick={handleSendContent}
+                disabled={isSendDisabled} 
                 style={{
-                  width: "30px",
-                  height: "30px",
-                  cursor: "pointer",
+                  cursor: isSendDisabled ? "not-allowed" : "pointer",
+                  opacity: isSendDisabled ? 0.5 : 1, 
+                  border: "none",
+                  background: "none",
                 }}
-              />
+              >
+                <LuSendHorizontal
+                  className="icons"
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                  }}
+                />
+              </button>
             </div>
           </div>
         </div>

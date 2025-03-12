@@ -6,14 +6,16 @@ import Sidebar from "./components/navbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingAnimation from "./components/LoadingAnimation";
+import DeleteConfirmationModal from "./components/DeleteConfirmationModal";
+import { deleteResults } from "./services/apiCalls";
 
 const useBackendStatus = () => {
-  const [isOnline, setIsOnline] = useState(null); // Start with null to handle loading state
+  const [isOnline, setIsOnline] = useState(null);
 
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        await axios.get("http://localhost:3000"); // Change to your actual health-check endpoint
+        await axios.get("http://localhost:3000"); // Your API health-check endpoint
         setIsOnline(true);
       } catch (error) {
         setIsOnline(false);
@@ -21,31 +23,44 @@ const useBackendStatus = () => {
     };
 
     checkBackend();
-  }, []); // Runs only once when the component mounts
+  }, []);
 
   return isOnline;
 };
 
 function App() {
   const [buttons, setButtons] = useState([]);
-  // Load buttons from sessionStorage when the component mounts
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+
   useEffect(() => {
     const loadButtons = () => {
       const storedButtons = JSON.parse(sessionStorage.getItem("buttons")) || [];
       setButtons(storedButtons);
     };
-  
-    // Run once on mount
+
     loadButtons();
-  
-    // Listen for storage changes
     window.addEventListener("storage", loadButtons);
     
     return () => {
       window.removeEventListener("storage", loadButtons);
     };
   }, []);
-  
+
+  const handleDeleteClick = (id) => {
+    setDeleteId(id);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteId !== null) {
+      await deleteResults(deleteId);
+      const updatedButtons = buttons.filter((button) => button.id !== deleteId);
+      setButtons(updatedButtons);
+      sessionStorage.setItem("buttons", JSON.stringify(updatedButtons));
+    }
+    setIsModalOpen(false);
+  };
 
   const isBackendOnline = useBackendStatus();
 
@@ -70,12 +85,19 @@ function App() {
   return (
     <div style={{ width: "100%", height: "100vh" }}>
       <Router>
-        <Sidebar buttons={buttons} setButtons={setButtons} />
+        <Sidebar buttons={buttons} setButtons={setButtons} handleDeleteClick={handleDeleteClick} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/checking/:id?" element={<FactCheckingPage />} />
         </Routes>
       </Router>
+
+      {/* Delete Confirmation Modal in the center of the page */}
+      <DeleteConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleDeleteConfirm}
+      />
     </div>
   );
 }

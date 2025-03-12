@@ -51,5 +51,18 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ message: "Server Error", error: error.message });
     }
+  },
+  deleteResults : async (req,res)=> {
+    try {
+      const id = req.params.id ; 
+      const deletedItem =await Result.deleteOne({jobId : id})
+      if(!deletedItem) {
+        return res.status(404).json({message : "Result not found"})
+      }
+      res.json({message:"Item deleted successfully !"})
+    }
+    catch(error){
+      res.status(500).json({ message: "Server Error" ,error: error.message })
+    }
   }
 };

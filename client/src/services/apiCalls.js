@@ -62,32 +62,11 @@ export const getResults = async (id) => {
     throw error.response?.data?.message || "Failed to fetch data";
   }
 };
-export const getContentByJobId = async (id) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/get-claim/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error fetching claim:",
-      error.response?.data || error.message
-    );
-    return null;
+export const deleteResults = async (id) => {
+  try{
+    await axios.delete(`${API_BASE_URL}/results/${id}`);
   }
-};
-export const saveContent = async (jobId, content) => {
-  try {
-    console.log("Sending saveContent request...");
-    const response = await axios.post(`${API_BASE_URL}/save-content/${jobId}`, {
-      content,
-    });
-
-    console.log("saveContent response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error saving content:",
-      error.response?.data || error.message
-    );
-    return null;
+  catch(e){
+    throw error.response?.data?.message || "Failed to delete data";
   }
-};
+}

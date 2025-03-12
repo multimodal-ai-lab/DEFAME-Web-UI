@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingAnimation from "../components/LoadingAnimation";
 import AccordionFact from "../components/AccordionFact";
 import "./FactCheckingPage.css";
 import {
   handleSave,
   getResults,
-  getContentByJobId,
 } from "../services/apiCalls";
 
 // Make sure the server supports Socket.IO
@@ -20,6 +19,7 @@ const FactCheckingPage = () => {
     disconnected: "disconnected",
     error: "error",
   };
+  const navigate = useNavigate();
   const [reportAvailable, setReportAvailable] = useState(false);
   const [buttons, setButtons] = useState([]);
   const [firstResponse, setFirstResponse] = useState(false);
@@ -143,6 +143,7 @@ const FactCheckingPage = () => {
     const saveResults = async () => {
       if (finished) {
         await handleSave(jobId, content, claims);
+        
         const storedButtons =
           JSON.parse(sessionStorage.getItem("buttons")) || [];
         const exists = storedButtons.some((button) => button.id === jobId);
@@ -157,8 +158,8 @@ const FactCheckingPage = () => {
         }
       }
     };
-
     saveResults();
+    navigate(`/checking/${jobId}`);
   }, [finished]);
 
   const updateClaims = (claim) => {
@@ -174,6 +175,9 @@ const FactCheckingPage = () => {
       return newClaims;
     });
   };
+  if (!content || content.length === 0) {
+    return null; 
+  }
   return (
     <div className="parent">
       <div className="container">
