@@ -1,0 +1,55 @@
+.input-send {
+    background-color: #ffffff; /* Optional, adjust as needed */
+    border: 2px solid #e8d5d5;
+    width: 100%;
+    padding: 0px 10px 10px 10px;
+    margin-top: 30px;
+    border-radius: 25px;
+    box-shadow: 0px 4px 80px 5px rgba(0, 0, 0, 0.15);
+  }
+  .input-send:hover {
+    border: 2px solid #060640;
+  }
+  .input-send:focus-within {
+    border: 2px solid #060640;
+  }
+  .inputform {
+    border-radius: 5px;
+    padding: 6px 10px 0px 10px;
+    min-height: 75px;
+    max-height: 350px;
+    margin-top: 4px;
+    font-size: 20px;
+    overflow: auto;
+    line-height: 1.5;
+    width: 100%;
+  }
+  .inputform:focus {
+    outline: none;
+  }
+  .image-and-send {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0px;
+  }
+  .image-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    margin: 0 10px;
+    width: 30px;
+    height: 30px;
+    stroke: none;
+  }
+  .icons {
+    color: #9D9D9D;
+  }
+  .icons:hover{
+    color: #060640;
+  }
+  .shared-image-style {
+    max-width: 300px;
+    display: block;
+    margin: 10px 0;
+  }

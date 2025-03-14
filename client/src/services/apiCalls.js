@@ -48,7 +48,7 @@ export const handleSave = async (job_id, content, claims) => {
     });
   } catch (error) {
     if (error.response && error.response.status === 409) {
-      return null; 
+      return null;
     } else {
       alert("Failed to send data.");
     }
@@ -63,10 +63,9 @@ export const getResults = async (id) => {
   }
 };
 export const deleteResults = async (id) => {
-  try{
+  try {
     await axios.delete(`${API_BASE_URL}/results/${id}`);
-  }
-  catch(e){
+  } catch (e) {
     throw error.response?.data?.message || "Failed to delete data";
   }
-}
+};

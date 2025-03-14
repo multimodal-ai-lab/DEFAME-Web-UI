@@ -275,7 +275,7 @@ const AccordionFact = (props) => {
                 >
                   <FaRegFileAlt />
                 </i>
-                {props.reportAvailable ? (
+                {props.isAllDone ? (
                   <a
                     onClick={() => {
                       downloadReport(props.item.claim_id);

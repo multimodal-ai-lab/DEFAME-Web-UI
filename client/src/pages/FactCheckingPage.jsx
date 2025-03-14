@@ -4,10 +4,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LoadingAnimation from "../components/LoadingAnimation";
 import AccordionFact from "../components/AccordionFact";
 import "./FactCheckingPage.css";
-import {
-  handleSave,
-  getResults,
-} from "../services/apiCalls";
+import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
+import { handleSave, getResults } from "../services/apiCalls";
+import { showContent } from "../utils/helperFunctions";
+import FactCheckInput from "../components/FactCheckInput";
 
 // Make sure the server supports Socket.IO
 
@@ -20,10 +21,11 @@ const FactCheckingPage = () => {
     error: "error",
   };
   const navigate = useNavigate();
-  const [reportAvailable, setReportAvailable] = useState(false);
+  const [isAllDone, setAllDone] = useState(false);
   const [buttons, setButtons] = useState([]);
   const [firstResponse, setFirstResponse] = useState(false);
   const [secondResponse, setSecondResponse] = useState(false);
+  const [isEditMode, setEditMode] = useState(false);
   const [finished, setFinished] = useState(false);
   const location = useLocation();
   const { id } = useParams();
@@ -55,7 +57,7 @@ const FactCheckingPage = () => {
           setClaims(data.claims);
           setFirstResponse(true);
           setSecondResponse(true);
-          setReportAvailable(true);
+          setAllDone(true);
         }
       };
       fetchData();
@@ -100,7 +102,7 @@ const FactCheckingPage = () => {
             }
             if (status === "DONE") {
               setFinished(true);
-              setReportAvailable(true);
+              setAllDone(true);
             }
           }
 
@@ -138,12 +140,12 @@ const FactCheckingPage = () => {
         socket.close();
       };
     }
-  }, [jobId,id]);
+  }, [jobId, id]);
   useEffect(() => {
     const saveResults = async () => {
       if (finished) {
         await handleSave(jobId, content, claims);
-        
+
         const storedButtons =
           JSON.parse(sessionStorage.getItem("buttons")) || [];
         const exists = storedButtons.some((button) => button.id === jobId);
@@ -175,9 +177,7 @@ const FactCheckingPage = () => {
       return newClaims;
     });
   };
-  if (!content || content.length === 0) {
-    return null; 
-  }
+
   return (
     <div className="parent">
       <div className="container">
@@ -185,18 +185,14 @@ const FactCheckingPage = () => {
           <h1>Content to check</h1>
           {/*<div className="content-wrapper">*/}
           <div className="content">
-            {content.map((item, index) => (
-              <div key={index}>
-                {item[0] === "text" && <p>{item[1]}</p>}
-                {item[0] === "image" && (
-                  <img
-                    src={`data:image/png;base64,${item[1]}`}
-                    alt={`img-${index}`}
-                    className="shared-image-style"
-                  />
-                )}
-              </div>
-            ))}
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button disabled={!isAllDone} startIcon={<EditIcon/>} onClick={() => setEditMode(!isEditMode)}>
+              Edit
+            </Button>
+            </div>
+            {!isEditMode?
+            showContent(content): <FactCheckInput isEdited={true} content={showContent(content)}/>
+          }
           </div>
           {/*</div>*/}
         </div>
@@ -221,7 +217,7 @@ const FactCheckingPage = () => {
                   item={item}
                   firstResponse={firstResponse}
                   secondResponse={item.verdict != null}
-                  reportAvailable={reportAvailable}
+                  isAllDone={isAllDone}
                 />
               ))}
             </div>
