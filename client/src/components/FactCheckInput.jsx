@@ -5,7 +5,7 @@ import { LuSendHorizontal } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { handlePaste, handleFileUpload, handleSendContent } from "../utils/helperFunctions";
 
-const FactCheckInput = ({ editorRef, content, isEdited }) => {
+const FactCheckInput = ({ style,editorRef, content, isEdited }) => {
   const [isSendDisabled, setIsSendDisabled] = useState(true);
   const navigate = useNavigate();
 
@@ -22,7 +22,8 @@ const FactCheckInput = ({ editorRef, content, isEdited }) => {
   };
 
   return (
-    <div className="input-send">
+    <div className="input-send"
+    style={style}>
       {/* Editable content area */}
       <div
         className="inputform"

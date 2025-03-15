@@ -158,3 +158,27 @@ export const handleSendContent = async (editorRef, navigate, isEdited) => {
     }
   }
 };
+export const updateClaimsHelper = (prevClaims, newClaimsData) => {
+  // Clone previous claims to avoid direct mutation
+  const updatedClaims = { ...prevClaims };
+
+  // Loop through each claim in newClaimsData and update
+  Object.entries(newClaimsData).forEach(([key, newClaim]) => {
+      updatedClaims[key] = {
+          claim_id: updatedClaims[key]?.claim_id ?? newClaim.claim_id, // Keep first non-null claim_id
+          data: newClaim.data ?? updatedClaims[key]?.data ?? [["text", "No data available"]], // Keep old data if missing
+          verdict: newClaim.verdict ?? null, // Explicitly set to null if not present
+          justification: newClaim.justification ?? null // Explicitly set to null if not present
+      };
+  });
+
+  // Convert the final claims object into an array
+  return Object.values(updatedClaims);
+};
+
+
+
+
+
+
+

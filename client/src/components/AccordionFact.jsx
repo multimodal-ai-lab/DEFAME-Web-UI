@@ -171,7 +171,7 @@ const AccordionFact = (props) => {
               props.secondResponse ? { color: "white" } : { color: "black" }
             }
           >
-            {props.firstResponse && setTitle(props.item.data[0][1])}
+            {props.firstResponse && setTitle(props.data)}
           </span>
         </Typography>
       </AccordionSummary>

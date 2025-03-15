@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     const loadButtons = () => {
-      const storedButtons = JSON.parse(sessionStorage.getItem("buttons")) || [];
+      const storedButtons = JSON.parse(localStorage.getItem("buttons")) || [];
       setButtons(storedButtons);
     };
 
@@ -57,7 +57,7 @@ function App() {
       await deleteResults(deleteId);
       const updatedButtons = buttons.filter((button) => button.id !== deleteId);
       setButtons(updatedButtons);
-      sessionStorage.setItem("buttons", JSON.stringify(updatedButtons));
+      localStorage.setItem("buttons", JSON.stringify(updatedButtons));
     }
     setIsModalOpen(false);
   };
