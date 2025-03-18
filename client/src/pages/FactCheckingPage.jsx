@@ -28,6 +28,7 @@ const FactCheckingPage = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isEditMode, setEditMode] = useState(false);
   const [isAllDone, setAllDone] = useState(false);
+  const[topic,setTopic] = useState("") ;
   const [buttons, setButtons] = useState([]);
   const [firstResponse, setFirstResponse] = useState(false);
   const [secondResponse, setSecondResponse] = useState(false);
@@ -123,6 +124,9 @@ const FactCheckingPage = () => {
             if (data.job_info.status) {
               setStatus(data.job_info.status);
             }
+            if(data.content.topic) {
+              setTopic(data.content.topic)
+            }
             // if (data?.job_info?.status_message) {
             //   const status = data.job_info.status;
             //   if (status === "Extracting claims.") {
@@ -186,7 +190,7 @@ const FactCheckingPage = () => {
         const storedButtons = JSON.parse(localStorage.getItem("buttons")) || [];
         const exists = storedButtons.some((button) => button.id === jobId);
         if (!exists) {
-          const newButton = { id: jobId, title: claims[0].data[0][1] };
+          const newButton = { id: jobId, title: topic };
           const updatedButtons = [...storedButtons, newButton];
           localStorage.setItem("buttons", JSON.stringify(updatedButtons));
           window.dispatchEvent(new Event("storage"));

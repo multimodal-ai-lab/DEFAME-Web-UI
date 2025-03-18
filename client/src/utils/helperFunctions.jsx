@@ -113,20 +113,15 @@ export const setTitle = (text) => {
     return text.slice(0, 52) + "...";
   } else return text;
 };
-export const setNavbarTitle = (text, hovered) => {
+export const setNavbarTitle = (text, hovered, maxLength = 18) => {
   if (hovered) {
-    if (text.length > 16) {
-      return text.slice(0, 16) + "..";
-    } else {
-      return text;
-    }
-  } else {
-    if (text.length > 20) {
-      return text.slice(0, 20) + "..";
-    }
-    return text;
+    return text; // Show full text when hovered
   }
+  
+  return text.length > maxLength ? text.slice(0, maxLength) + ".." : text;
 };
+
+
 
 export const showContent = (content) => {
   return content.map((item, index) => (
