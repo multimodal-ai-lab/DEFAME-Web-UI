@@ -15,7 +15,7 @@ const useBackendStatus = () => {
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        await axios.get("http://thot.mai.informatik.tu-darmstadt.de:3000"); // Your API health-check endpoint
+        await axios.get("http://backend:3000"); // Your API health-check endpoint
         setIsOnline(true);
       } catch (error) {
         setIsOnline(false);
