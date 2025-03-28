@@ -115,7 +115,7 @@ export const setTitle = (text) => {
 };
 export const setNavbarTitle = (text, hovered, maxLength = 18) => {
   if (hovered) {
-    return text; // Show full text when hovered
+    return text.length > maxLength ? text.slice(0, 12) + ".." : text;
   }
   
   return text.length > maxLength ? text.slice(0, maxLength) + ".." : text;
