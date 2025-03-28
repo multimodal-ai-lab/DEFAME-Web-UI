@@ -31,7 +31,7 @@ import {
   WhatsappIcon,
 } from "react-share";
 import "./AccordionFact.css";
-import {setTitle} from "../utils/helperFunctions"
+import { setTitle } from "../utils/helperFunctions";
 
 const AccordionFact = (props) => {
   const [liked, setLiked] = useState(false);
@@ -40,13 +40,13 @@ const AccordionFact = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -115,7 +115,7 @@ const AccordionFact = (props) => {
   };
 
   // Function to convert Markdown links to clickable links
-  const renderJustificationWithLinks = (text,color) => {
+  const renderJustificationWithLinks = (text, color) => {
     if (!text) return "";
 
     return text.replace(
@@ -171,7 +171,7 @@ const AccordionFact = (props) => {
               props.secondResponse ? { color: "white" } : { color: "black" }
             }
           >
-            {props.firstResponse && setTitle(props.item.data[0][1])}
+            {props.firstResponse && setTitle(props.data)}
           </span>
         </Typography>
       </AccordionSummary>
@@ -252,7 +252,8 @@ const AccordionFact = (props) => {
                   __html: renderJustificationWithLinks(
                     props.item.justification
                       ? props.item.justification[0][1]
-                      : "",setColor(props.item.verdict)
+                      : "",
+                    setColor(props.item.verdict)
                   ),
                 }}
               ></p>
@@ -275,28 +276,18 @@ const AccordionFact = (props) => {
                 >
                   <FaRegFileAlt />
                 </i>
-                {props.isAllDone ? (
-                  <a
-                    onClick={() => {
-                      downloadReport(props.item.claim_id);
-                    }}
-                    className="full-report"
-                    style={{
-                      color: setColor(props.item.verdict),
-                      marginTop: 2,
-                    }}
-                  >
-                    Full Report
-                  </a>
-                ) : (
-                  <CircularProgress
-                    style={{
-                      color: setColor(props.item.verdict),
-                      marginTop: 8,
-                    }}
-                    size="10px"
-                  />
-                )}
+                <a
+                  onClick={() => {
+                    downloadReport(props.item.claim_id);
+                  }}
+                  className="full-report"
+                  style={{
+                    color: setColor(props.item.verdict),
+                    marginTop: 2,
+                  }}
+                >
+                  Full Report
+                </a>
               </div>
               <div
                 style={{
@@ -331,29 +322,40 @@ const AccordionFact = (props) => {
                     >
                       Spread the truth!
                     </Typography>
-                    <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "10px" }}>
-                    <FacebookShareButton
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "10px",
+                        marginTop: "10px",
+                      }}
+                    >
+                      <FacebookShareButton
                         url="www.google.com"
-                        hashtag="#factcheck">
-                        <FacebookIcon/>
+                        hashtag="#factcheck"
+                      >
+                        <FacebookIcon />
                       </FacebookShareButton>
                       <TwitterShareButton
                         url={linkToShare(props.item.claim_id)}
-                        title={`Is this Claim really true? "${props.item.data[0][1]}." Let's find out!`}>
-                        <TwitterIcon/>
+                        title={`Is this Claim really true? "${props.item.data[0][1]}." Let's find out!`}
+                      >
+                        <TwitterIcon />
                       </TwitterShareButton>
                       <WhatsappShareButton
                         url={linkToShare(props.item.claim_id)}
-                        title={`Is this Claim really true? "${props.item.data[0][1]}." Let's find out!`}>
-                        <WhatsappIcon/>
+                        title={`Is this Claim really true? "${props.item.data[0][1]}." Let's find out!`}
+                      >
+                        <WhatsappIcon />
                       </WhatsappShareButton>
                       <EmailShareButton
                         url={linkToShare(props.item.claim_id)}
                         subject={props.item.data[0][1]}
-                        body={`Is this Claim really true? "${props.item.data[0][1]}." Let's find out!`}>
-                        <EmailIcon/>
+                        body={`Is this Claim really true? "${props.item.data[0][1]}." Let's find out!`}
+                      >
+                        <EmailIcon />
                       </EmailShareButton>
-                      </div>
+                    </div>
                   </Box>
                 </Modal>
 

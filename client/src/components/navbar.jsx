@@ -38,7 +38,7 @@ const Sidebar = ({ buttons, setButtons, handleDeleteClick }) => {
   };
 
   const filteredButtons = buttons.filter((button) =>
-    button.title?.toLowerCase().startsWith(search)
+    button.title?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (

@@ -113,20 +113,15 @@ export const setTitle = (text) => {
     return text.slice(0, 52) + "...";
   } else return text;
 };
-export const setNavbarTitle = (text, hovered) => {
+export const setNavbarTitle = (text, hovered, maxLength = 18) => {
   if (hovered) {
-    if (text.length > 16) {
-      return text.slice(0, 16) + "..";
-    } else {
-      return text;
-    }
-  } else {
-    if (text.length > 20) {
-      return text.slice(0, 20) + "..";
-    }
-    return text;
+    return text; // Show full text when hovered
   }
+  
+  return text.length > maxLength ? text.slice(0, maxLength) + ".." : text;
 };
+
+
 
 export const showContent = (content) => {
   return content.map((item, index) => (
@@ -158,3 +153,27 @@ export const handleSendContent = async (editorRef, navigate, isEdited) => {
     }
   }
 };
+export const updateClaimsHelper = (prevClaims, newClaimsData) => {
+  // Clone previous claims to avoid direct mutation
+  const updatedClaims = { ...prevClaims };
+
+  // Loop through each claim in newClaimsData and update
+  Object.entries(newClaimsData).forEach(([key, newClaim]) => {
+      updatedClaims[key] = {
+          claim_id: updatedClaims[key]?.claim_id ?? newClaim.claim_id, // Keep first non-null claim_id
+          data: newClaim.data ?? updatedClaims[key]?.data ?? [["text", "No data available"]], // Keep old data if missing
+          verdict: newClaim.verdict ?? null, // Explicitly set to null if not present
+          justification: newClaim.justification ?? null // Explicitly set to null if not present
+      };
+  });
+
+  // Convert the final claims object into an array
+  return Object.values(updatedClaims);
+};
+
+
+
+
+
+
+
