@@ -5,10 +5,11 @@ module.exports = {
   verify: async (req, res) => {
     try {
       const apiKey = "jksdfgikjnwaoolekrnt3298iun3qpo0s0o2knsadfo19";
+      const apiUrl = process.env.AI_API_URL;
       const data = req.body;
 
       const response = await axios.post(
-        "http://thot.mai.informatik.tu-darmstadt.de:3003/verify",
+        `${apiUrl}/verify`,
         data,
         {
           headers: {

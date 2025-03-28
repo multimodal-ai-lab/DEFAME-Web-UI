@@ -28,7 +28,7 @@ const FactCheckingPage = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isEditMode, setEditMode] = useState(false);
   const [isAllDone, setAllDone] = useState(false);
-  const[topic,setTopic] = useState("") ;
+  const [topic, setTopic] = useState("");
   const [buttons, setButtons] = useState([]);
   const [firstResponse, setFirstResponse] = useState(false);
   const [secondResponse, setSecondResponse] = useState(false);
@@ -124,42 +124,11 @@ const FactCheckingPage = () => {
             if (data.job_info.status) {
               setStatus(data.job_info.status);
             }
-            if(data.content.topic) {
-              setTopic(data.content.topic)
+            if (data.content) {
+              if (data.content.topic) {
+                setTopic(data.content.topic);
+              }
             }
-            // if (data?.job_info?.status_message) {
-            //   const status = data.job_info.status;
-            //   if (status === "Extracting claims.") {
-            //     setState("extractingClaims");
-            //   }
-            //   if (status === "DONE" && Object.keys(data).length > 2) {
-            //     setClaims(Object.values(data.claims));
-            //     setFirstResponse(true);
-            //     setSecondResponse(true);
-            //     setAllDone(true);
-            //   }
-            //   if (
-            //     (status === "RUNNING" && data?.claims) ||
-            //     (status === "PENDING" && state !== "extractingClaims")
-            //   ) {
-            //     setClaims(Object.values(data.claims));
-            //     setState("extreactedClaims");
-            //     setFirstResponse(true);
-            //   }
-            // }
-
-            // if (data?.claims && state === "extractingClaims") {
-            //   setState("extreactedClaims");
-            //   setClaims((prevClaims) => [
-            //     ...prevClaims,
-            //     ...Object.values(data.claims),
-            //   ]);
-            //   setFirstResponse(true);
-            // }
-
-            // if (data?.claims && state === "extreactedClaims") {
-            //   updateClaims(data.claims);
-            // }
           } catch (error) {
             setState("error");
             console.error("WebSocket Message Error:", error);
@@ -243,7 +212,11 @@ const FactCheckingPage = () => {
             {!isEditMode ? (
               showContent(content)
             ) : (
-              <FactCheckInput style = {{marginTop : "5px"}}isEdited={true} content={showContent(content)} />
+              <FactCheckInput
+                style={{ marginTop: "5px" }}
+                isEdited={true}
+                content={showContent(content)}
+              />
             )}
           </div>
           {/*</div>*/}

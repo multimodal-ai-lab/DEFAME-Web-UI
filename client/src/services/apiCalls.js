@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://thot.mai.informatik.tu-darmstadt.de:3000";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const postData = async (parsedContent) => {
   const dataToSend = parsedContent;

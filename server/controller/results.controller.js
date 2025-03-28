@@ -4,7 +4,7 @@ const Result = require("../model/claimSchema");
 module.exports = {
   downloadReport: async (req, res) => {
     const { query_id, claim_id } = req.params;
-    const apiUrl = `http://thot.mai.informatik.tu-darmstadt.de:3003/results/${query_id}/${claim_id}/report.pdf`;
+    const apiUrl = `${process.env.AI_API_URL}/results/${query_id}/${claim_id}/report.pdf`;
 
     try {
       // Step 2: Fetch the report from the external API
