@@ -19,7 +19,7 @@ services:
     depends_on:
       - mongo
     environment:
-      MONGO_URI: "mongodb://mongo:27017/Factchecker"
+      MONGO_URI: "mongodb://root:changeme@mongo:27017/Factchecker?authSource=admin"
     networks:
       - mern-app
 
@@ -31,6 +31,10 @@ services:
       - mongo_data:/data/db
     networks:
       - mern-app
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "changeme"
+
   mongo-express:
     image: mongo-express:latest
     restart: always
@@ -38,6 +42,15 @@ services:
     - 8085:8081
     networks:
       - mern-app
+    environment:
+      # Mongo Express UI Credentials
+      ME_CONFIG_BASICAUTH_USERNAME: "admin"
+      ME_CONFIG_BASICAUTH_PASSWORD: "pass"
+
+      # Mongo DB Credentials
+      ME_CONFIG_MONGODB_ADMINUSERNAME: "root"
+      ME_CONFIG_MONGODB_ADMINPASSWORD: "changeme"
+      ME_CONFIG_MONGODB_URL: "mongodb://root:changeme@mongo:27017/"
 
 volumes:
   mongo_data:
